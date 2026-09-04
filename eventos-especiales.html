@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eventos Especiales · Laguna Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deep:#2E1F4D; --mid:#5C3E8C; --sand:#F6F3FA; --sand2:#ECE4F5; --ink:#221933;
+  --accent:#7A5C9E; --accent-dark:#61437F; --ok:#4C9A6A; --bad:#C24A3A; --warn:#C98A2B;
+  --line:#DED3EC; --radius:14px; font-family:'Inter',sans-serif;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--sand);color:var(--ink);}
+h1,h2,h3{font-family:'Fraunces',serif;margin:0;}
+header.app{background:linear-gradient(135deg,var(--deep),var(--mid));color:#fff;padding:28px 6vw 42px;position:relative;overflow:hidden;}
+header.app .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;}
+header.app h1{font-size:clamp(28px,4vw,42px);font-weight:600;margin-top:6px;}
+header.app p.sub{opacity:.85;margin-top:8px;max-width:600px;font-size:15px;}
+.wave{position:absolute;left:0;right:0;bottom:-2px;height:46px;}
+.wave svg{width:100%;height:100%;display:block;}
+main{max-width:1180px;margin:-18px auto 60px;padding:0 6vw;position:relative;z-index:2;}
+.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:34px;}
+.stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:0 6px 18px -12px rgba(46,31,77,.2);}
+.stat .label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#7c6f92;font-family:'IBM Plex Mono',monospace;}
+.stat .value{font-size:26px;font-weight:700;font-family:'Fraunces',serif;color:var(--deep);margin-top:4px;}
+section.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;margin-bottom:26px;box-shadow:0 8px 24px -18px rgba(46,31,77,.25);}
+section.panel h2{font-size:21px;color:var(--deep);margin-bottom:4px;}
+section.panel .desc{color:#7c6f92;font-size:13.5px;margin-bottom:18px;}
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--sand2);}
+.card h3{font-size:16px;color:var(--deep);}
+.card .meta{font-size:12.5px;color:#7c6f92;margin-top:8px;line-height:1.5;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);}
+th{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7c6f92;}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;}
+.badge.ok{background:#e5f3ea;color:var(--ok);}
+.badge.bad{background:#fbe8e4;color:var(--bad);}
+.badge.warn{background:#fdf0dd;color:var(--warn);}
+form.grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;align-items:end;}
+label{display:block;font-size:12.5px;font-weight:600;color:var(--deep);margin-bottom:5px;}
+select,input{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;background:#fff;}
+select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+button{cursor:pointer;border:none;border-radius:8px;padding:10px 18px;font-weight:600;font-size:13.5px;font-family:'Inter',sans-serif;}
+button.primary{background:var(--accent);color:#fff;}
+button.primary:hover{background:var(--accent-dark);}
+button.small{padding:6px 12px;font-size:12.5px;}
+.msg{padding:10px 14px;border-radius:8px;font-size:13.5px;margin-top:12px;display:none;}
+.msg.show{display:block;}
+.msg.ok{background:#e5f3ea;color:var(--ok);border:1px solid #c1e2cd;}
+.msg.bad{background:#fbe8e4;color:var(--bad);border:1px solid #f1c3ba;}
+.toast-wrap{position:fixed;top:18px;right:18px;z-index:99;display:flex;flex-direction:column;gap:8px;}
+.toast{padding:12px 16px;border-radius:10px;font-size:13.5px;font-weight:600;box-shadow:0 8px 20px -8px rgba(0,0,0,.3);animation:slidein .2s ease;}
+.toast.ok{background:var(--ok);color:#fff;}
+.toast.bad{background:var(--bad);color:#fff;}
+@keyframes slidein{from{transform:translateX(30px);opacity:0}to{transform:translateX(0);opacity:1}}
+footer{text-align:center;font-size:12px;color:#9a8fac;padding:20px;font-family:'IBM Plex Mono',monospace;}
+@media(max-width:640px){.dash{grid-template-columns:repeat(2,1fr);} form.grid-form{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<header class="app">
+  <div class="eyebrow">Laguna Experience · Módulo de eventos</div>
+  <h1>Eventos Especiales</h1>
+  <p class="sub">Publicación de eventos, venta de entradas asociadas a la pulsera, control de capacidad y validación de acceso.</p>
+  <div class="wave"><svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,30 C150,60 350,0 600,30 C850,60 1050,0 1200,30 L1200,60 L0,60 Z" fill="#F6F3FA"/></svg></div>
+</header>
+
+<main>
+  <div class="dash" id="dash"></div>
+
+  <section class="panel">
+    <h2>Crear evento</h2>
+    <form class="grid-form" id="eventoForm">
+      <div><label for="evNombre">Nombre</label><input type="text" id="evNombre" placeholder="Ej: Noche de fuegos artificiales" required></div>
+      <div><label for="evFecha">Fecha</label><input type="date" id="evFecha" required></div>
+      <div><label for="evHora">Horario</label><input type="time" id="evHora" required></div>
+      <div><label for="evCap">Capacidad</label><input type="number" id="evCap" min="1" value="50" required></div>
+      <div><button type="submit" class="primary">Publicar evento</button></div>
+    </form>
+    <div class="msg" id="eventoMsg"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Eventos disponibles</h2>
+    <div class="grid-cards" id="eventCards"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Comprar / reservar entrada</h2>
+    <p class="desc">La entrada queda asociada a la pulsera del visitante. No se puede superar la capacidad del evento.</p>
+    <form class="grid-form" id="entradaForm">
+      <div><label for="entEvento">Evento</label><select id="entEvento" required></select></div>
+      <div><label for="entVis">Visitante</label><select id="entVis" required></select></div>
+      <div><button type="submit" class="primary">Comprar entrada</button></div>
+    </form>
+    <div class="msg" id="entradaMsg"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Control de acceso</h2>
+    <p class="desc">Validá el ingreso escaneando la pulsera contra la entrada emitida.</p>
+    <form class="grid-form" id="accesoForm">
+      <div><label for="accPulsera">Código de pulsera</label><input type="text" id="accPulsera" placeholder="Ej: PUL-1001" required></div>
+      <div><label for="accEvento">Evento</label><select id="accEvento" required></select></div>
+      <div><button type="submit" class="primary">Validar acceso</button></div>
+    </form>
+    <div class="msg" id="accesoMsg"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Entradas emitidas</h2>
+    <div style="overflow-x:auto;">
+    <table id="tablaEntradas">
+      <thead><tr><th>ID</th><th>Evento</th><th>Visitante</th><th>Pulsera</th><th>Estado</th><th>Consumos</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Registrar consumo durante el evento</h2>
+    <form class="grid-form" id="consumoForm">
+      <div><label for="consEntrada">Entrada</label><select id="consEntrada" required></select></div>
+      <div><label for="consDesc">Consumo</label><input type="text" id="consDesc" placeholder="Ej: gaseosa, snack" required></div>
+      <div><label for="consMonto">Monto</label><input type="number" id="consMonto" min="1" value="1500" required></div>
+      <div><button type="submit" class="primary">Registrar consumo</button></div>
+    </form>
+  </section>
+</main>
+
+<footer>Laguna Experience — Eventos Especiales — datos de demostración</footer>
+
+<script>
+// ---------- DATOS DE EJEMPLO ----------
+let eventos = [
+  {id:'EV1', nombre:'Noche de fuegos artificiales', fecha:'2026-09-05', hora:'21:00', capacidad:80, vendidas:0},
+  {id:'EV2', nombre:'Festival gastronómico', fecha:'2026-09-12', hora:'18:00', capacidad:150, vendidas:0},
+  {id:'EV3', nombre:'DJ set en la laguna', fecha:'2026-09-19', hora:'20:00', capacidad:5, vendidas:5}, // ya lleno, para probar bloqueo
+];
+let eventoCounter = 3;
+
+let visitantes = [
+  {id:'V1', nombre:'Ana Gómez', pulsera:'PUL-1001'},
+  {id:'V2', nombre:'Luis Fernández', pulsera:'PUL-1002'},
+  {id:'V3', nombre:'Carla Núñez', pulsera:'PUL-1003'},
+];
+
+let entradas = [];
+let entradaCounter = 0;
+
+// ---------- UTILIDADES ----------
+function showToast(text, type){
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div'); t.className='toast '+type; t.textContent=text;
+  wrap.appendChild(t); setTimeout(()=>t.remove(),3200);
+}
+function showMsg(id,text,ok){
+  const el = document.getElementById(id);
+  el.textContent = text; el.className = 'msg show ' + (ok?'ok':'bad');
+}
+
+// ---------- RENDER ----------
+function renderDash(){
+  const totalVendidas = eventos.reduce((s,e)=>s+e.vendidas,0);
+  const consumoTotal = entradas.reduce((s,e)=>s+e.consumos.reduce((a,c)=>a+c.monto,0),0);
+  document.getElementById('dash').innerHTML = `
+    <div class="stat"><div class="label">Eventos publicados</div><div class="value">${eventos.length}</div></div>
+    <div class="stat"><div class="label">Entradas vendidas</div><div class="value">${totalVendidas}</div></div>
+    <div class="stat"><div class="label">Accesos validados</div><div class="value">${entradas.filter(e=>e.estado==='usada').length}</div></div>
+    <div class="stat"><div class="label">Consumo en eventos</div><div class="value">$${consumoTotal.toLocaleString('es-AR')}</div></div>
+  `;
+}
+
+function renderEventCards(){
+  const wrap = document.getElementById('eventCards');
+  wrap.innerHTML = eventos.map(e=>{
+    const lleno = e.vendidas >= e.capacidad;
+    return `<div class="card">
+      <h3>${e.nombre} ${lleno?'<span class="badge bad">Completo</span>':''}</h3>
+      <div class="meta">${e.fecha} · ${e.hora}<br>Capacidad: ${e.vendidas}/${e.capacidad}</div>
+    </div>`;
+  }).join('');
+}
+
+function fillSelects(){
+  const entEvento = document.getElementById('entEvento');
+  entEvento.innerHTML = eventos.map(e=>`<option value="${e.id}">${e.nombre} (${e.vendidas}/${e.capacidad})</option>`).join('');
+  const entVis = document.getElementById('entVis');
+  entVis.innerHTML = visitantes.map(v=>`<option value="${v.id}">${v.nombre} — ${v.pulsera}</option>`).join('');
+  const accEvento = document.getElementById('accEvento');
+  accEvento.innerHTML = eventos.map(e=>`<option value="${e.id}">${e.nombre}</option>`).join('');
+  const consEntrada = document.getElementById('consEntrada');
+  consEntrada.innerHTML = entradas.filter(e=>e.estado!=='cancelada').map(e=>`<option value="${e.id}">${e.id} — ${e.visNombre} (${e.evNombre})</option>`).join('') || '<option value="">— no hay entradas —</option>';
+}
+
+function renderEntradas(){
+  const tbody = document.querySelector('#tablaEntradas tbody');
+  tbody.innerHTML = entradas.slice().reverse().map(e=>`
+    <tr>
+      <td>${e.id}</td><td>${e.evNombre}</td><td>${e.visNombre}</td><td>${e.pulsera}</td>
+      <td><span class="badge ${e.estado==='usada'?'ok':e.estado==='valida'?'warn':'bad'}">${e.estado}</span></td>
+      <td>${e.consumos.length ? e.consumos.map(c=>`${c.desc} ($${c.monto})`).join(', ') : '—'}</td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" style="color:#9a8fac;">Sin entradas emitidas.</td></tr>';
+}
+
+function renderAll(){ renderDash(); renderEventCards(); fillSelects(); renderEntradas(); }
+
+// ---------- CREAR EVENTO ----------
+document.getElementById('eventoForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const nombre = document.getElementById('evNombre').value.trim();
+  const fecha = document.getElementById('evFecha').value;
+  const hora = document.getElementById('evHora').value;
+  const capacidad = parseInt(document.getElementById('evCap').value,10);
+
+  // REGLA: todo evento debe tener fecha y horario, y capacidad máxima
+  if(!fecha || !hora){
+    showMsg('eventoMsg', 'No se puede publicar el evento sin fecha y horario definidos.', false);
+    return;
+  }
+  if(!capacidad || capacidad < 1){
+    showMsg('eventoMsg', 'La capacidad debe ser mayor a cero.', false);
+    return;
+  }
+  eventoCounter++;
+  eventos.push({id:'EV'+eventoCounter, nombre, fecha, hora, capacidad, vendidas:0});
+  showMsg('eventoMsg', `Evento "${nombre}" publicado para el ${fecha} a las ${hora}.`, true);
+  showToast('Evento publicado', 'ok');
+  document.getElementById('eventoForm').reset();
+  renderAll();
+});
+
+// ---------- COMPRAR ENTRADA ----------
+document.getElementById('entradaForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const evId = document.getElementById('entEvento').value;
+  const visId = document.getElementById('entVis').value;
+  const ev = eventos.find(x=>x.id===evId);
+  const vis = visitantes.find(x=>x.id===visId);
+
+  // REGLA: no superar capacidad del evento
+  if(ev.vendidas >= ev.capacidad){
+    showMsg('entradaMsg', `No se puede vender más entradas: "${ev.nombre}" alcanzó su capacidad máxima (${ev.capacidad}).`, false);
+    showToast('Evento completo', 'bad');
+    return;
+  }
+
+  ev.vendidas += 1;
+  entradaCounter++;
+  entradas.push({
+    id:'ENT-'+String(entradaCounter).padStart(4,'0'),
+    evId, evNombre: ev.nombre, visId, visNombre: vis.nombre, pulsera: vis.pulsera,
+    estado:'valida', consumos:[]
+  });
+  showMsg('entradaMsg', `Entrada emitida para ${vis.nombre}, asociada a la pulsera ${vis.pulsera}.`, true);
+  showToast('Entrada emitida', 'ok');
+  renderAll();
+});
+
+// ---------- VALIDAR ACCESO ----------
+document.getElementById('accesoForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const pulsera = document.getElementById('accPulsera').value.trim();
+  const evId = document.getElementById('accEvento').value;
+  const ev = eventos.find(x=>x.id===evId);
+
+  const entrada = entradas.find(en => en.pulsera.toLowerCase()===pulsera.toLowerCase() && en.evId===evId);
+
+  // REGLA: pulsera sin entrada válida → denegar acceso
+  if(!entrada){
+    showMsg('accesoMsg', `Acceso denegado: la pulsera ${pulsera} no tiene una entrada válida para "${ev.nombre}".`, false);
+    showToast('Acceso denegado', 'bad');
+    return;
+  }
+  if(entrada.estado === 'usada'){
+    showMsg('accesoMsg', `Acceso denegado: la entrada ${entrada.id} ya fue utilizada.`, false);
+    showToast('Entrada ya utilizada', 'bad');
+    return;
+  }
+
+  entrada.estado = 'usada';
+  showMsg('accesoMsg', `Acceso concedido a ${entrada.visNombre} mediante la pulsera ${pulsera}. Ingreso registrado.`, true);
+  showToast('Acceso concedido', 'ok');
+  renderAll();
+});
+
+// ---------- CONSUMOS ----------
+document.getElementById('consumoForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const entId = document.getElementById('consEntrada').value;
+  const desc = document.getElementById('consDesc').value.trim();
+  const monto = parseInt(document.getElementById('consMonto').value,10);
+  if(!entId){ showToast('No hay entradas para registrar consumo', 'bad'); return; }
+  const entrada = entradas.find(x=>x.id===entId);
+  entrada.consumos.push({desc, monto});
+  showToast(`Consumo registrado para ${entrada.visNombre}`, 'ok');
+  document.getElementById('consumoForm').reset();
+  document.getElementById('consMonto').value = 1500;
+  renderAll();
+});
+
+// ---------- INIT ----------
+renderAll();
+</script>
+</body>
+</html>
