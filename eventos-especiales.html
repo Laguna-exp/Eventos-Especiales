@@ -3,312 +3,1493 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Eventos Especiales · Laguna Experience</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
 <style>
+
 :root{
-  --deep:#2E1F4D; --mid:#5C3E8C; --sand:#F6F3FA; --sand2:#ECE4F5; --ink:#221933;
-  --accent:#7A5C9E; --accent-dark:#61437F; --ok:#4C9A6A; --bad:#C24A3A; --warn:#C98A2B;
-  --line:#DED3EC; --radius:14px; font-family:'Inter',sans-serif;
+  --deep:#2E1F4D;
+  --mid:#5C3E8C;
+  --sand:#F6F3FA;
+  --sand2:#ECE4F5;
+  --ink:#221933;
+  --accent:#7A5C9E;
+  --accent-dark:#61437F;
+  --ok:#4C9A6A;
+  --bad:#C24A3A;
+  --warn:#C98A2B;
+  --line:#DED3EC;
+  --white:#fff;
+  --radius:20px;
 }
-*{box-sizing:border-box;}
-body{margin:0;background:var(--sand);color:var(--ink);}
-h1,h2,h3{font-family:'Fraunces',serif;margin:0;}
-header.app{background:linear-gradient(135deg,var(--deep),var(--mid));color:#fff;padding:28px 6vw 42px;position:relative;overflow:hidden;}
-header.app .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;}
-header.app h1{font-size:clamp(28px,4vw,42px);font-weight:600;margin-top:6px;}
-header.app p.sub{opacity:.85;margin-top:8px;max-width:600px;font-size:15px;}
-.wave{position:absolute;left:0;right:0;bottom:-2px;height:46px;}
-.wave svg{width:100%;height:100%;display:block;}
-main{max-width:1180px;margin:-18px auto 60px;padding:0 6vw;position:relative;z-index:2;}
-.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:34px;}
-.stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:0 6px 18px -12px rgba(46,31,77,.2);}
-.stat .label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#7c6f92;font-family:'IBM Plex Mono',monospace;}
-.stat .value{font-size:26px;font-weight:700;font-family:'Fraunces',serif;color:var(--deep);margin-top:4px;}
-section.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;margin-bottom:26px;box-shadow:0 8px 24px -18px rgba(46,31,77,.25);}
-section.panel h2{font-size:21px;color:var(--deep);margin-bottom:4px;}
-section.panel .desc{color:#7c6f92;font-size:13.5px;margin-bottom:18px;}
-.grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
-.card{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--sand2);}
-.card h3{font-size:16px;color:var(--deep);}
-.card .meta{font-size:12.5px;color:#7c6f92;margin-top:8px;line-height:1.5;}
-table{width:100%;border-collapse:collapse;font-size:14px;}
-th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);}
-th{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7c6f92;}
-.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;}
-.badge.ok{background:#e5f3ea;color:var(--ok);}
-.badge.bad{background:#fbe8e4;color:var(--bad);}
-.badge.warn{background:#fdf0dd;color:var(--warn);}
-form.grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;align-items:end;}
-label{display:block;font-size:12.5px;font-weight:600;color:var(--deep);margin-bottom:5px;}
-select,input{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;background:#fff;}
-select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px;}
-button{cursor:pointer;border:none;border-radius:8px;padding:10px 18px;font-weight:600;font-size:13.5px;font-family:'Inter',sans-serif;}
-button.primary{background:var(--accent);color:#fff;}
-button.primary:hover{background:var(--accent-dark);}
-button.small{padding:6px 12px;font-size:12.5px;}
-.msg{padding:10px 14px;border-radius:8px;font-size:13.5px;margin-top:12px;display:none;}
-.msg.show{display:block;}
-.msg.ok{background:#e5f3ea;color:var(--ok);border:1px solid #c1e2cd;}
-.msg.bad{background:#fbe8e4;color:var(--bad);border:1px solid #f1c3ba;}
-.toast-wrap{position:fixed;top:18px;right:18px;z-index:99;display:flex;flex-direction:column;gap:8px;}
-.toast{padding:12px 16px;border-radius:10px;font-size:13.5px;font-weight:600;box-shadow:0 8px 20px -8px rgba(0,0,0,.3);animation:slidein .2s ease;}
-.toast.ok{background:var(--ok);color:#fff;}
-.toast.bad{background:var(--bad);color:#fff;}
-@keyframes slidein{from{transform:translateX(30px);opacity:0}to{transform:translateX(0);opacity:1}}
-footer{text-align:center;font-size:12px;color:#9a8fac;padding:20px;font-family:'IBM Plex Mono',monospace;}
-@media(max-width:640px){.dash{grid-template-columns:repeat(2,1fr);} form.grid-form{grid-template-columns:1fr;}}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:var(--sand);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  line-height:1.5;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+  background:linear-gradient(135deg,var(--deep),var(--mid));
+  color:#fff;
+  padding:45px 7vw 90px;
+  position:relative;
+  overflow:hidden;
+}
+
+header::before{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  background:rgba(255,255,255,.05);
+  right:-120px;
+  top:-180px;
+}
+
+header::after{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:rgba(255,255,255,.04);
+  left:-100px;
+  bottom:-180px;
+}
+
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  opacity:.75;
+  margin:0 0 8px;
+}
+
+header h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(34px,5vw,54px);
+  font-weight:600;
+  margin:0;
+  position:relative;
+  z-index:2;
+}
+
+header .sub{
+  max-width:650px;
+  margin:12px 0 0;
+  font-size:16px;
+  opacity:.88;
+  position:relative;
+  z-index:2;
+}
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+main{
+  max-width:1150px;
+  margin:-40px auto 60px;
+  padding:0 24px;
+  position:relative;
+  z-index:3;
+}
+
+/* =========================
+   INFO RAPIDA
+========================= */
+
+.quick-info{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-bottom:30px;
+}
+
+.info-card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow:0 12px 30px rgba(46,31,77,.10);
+}
+
+.info-icon{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:var(--sand2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  margin-bottom:12px;
+}
+
+.info-card h3{
+  font-family:'Fraunces',serif;
+  font-size:18px;
+  margin:0 0 5px;
+  color:var(--deep);
+}
+
+.info-card p{
+  margin:0;
+  font-size:13px;
+  color:#7c6f92;
+}
+
+/* =========================
+   SECCIONES
+========================= */
+
+section{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:28px;
+  margin-bottom:24px;
+  box-shadow:0 10px 28px rgba(46,31,77,.07);
+}
+
+.section-title{
+  font-family:'Fraunces',serif;
+  color:var(--deep);
+  font-size:27px;
+  margin:0;
+}
+
+.section-description{
+  color:#7c6f92;
+  font-size:14px;
+  margin:6px 0 22px;
+}
+
+/* =========================
+   EVENTOS
+========================= */
+
+.events-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.event-card{
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  background:#fff;
+  transition:.2s ease;
+  position:relative;
+}
+
+.event-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 30px rgba(46,31,77,.12);
+}
+
+.event-top{
+  min-height:155px;
+  padding:22px;
+  background:linear-gradient(135deg,var(--deep),var(--mid));
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+}
+
+.event-top::after{
+  content:"";
+  position:absolute;
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  right:-45px;
+  bottom:-55px;
+  background:rgba(255,255,255,.08);
+}
+
+.event-date{
+  display:inline-block;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:999px;
+  padding:5px 10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  margin-bottom:14px;
+}
+
+.event-top h3{
+  font-family:'Fraunces',serif;
+  font-size:21px;
+  line-height:1.2;
+  margin:0;
+  max-width:260px;
+}
+
+.event-body{
+  padding:18px;
+}
+
+.event-meta{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  color:#6f637f;
+  font-size:13px;
+  margin-bottom:16px;
+}
+
+.event-meta span{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.capacity{
+  font-size:12px;
+  color:#7c6f92;
+  margin-bottom:14px;
+}
+
+.capacity strong{
+  color:var(--deep);
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:999px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  font-weight:600;
+}
+
+.badge.available{
+  background:#e5f3ea;
+  color:var(--ok);
+}
+
+.badge.full{
+  background:#fbe8e4;
+  color:var(--bad);
+}
+
+.event-button{
+  width:100%;
+  border:none;
+  border-radius:10px;
+  padding:11px 15px;
+  background:var(--accent);
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  transition:.15s;
+}
+
+.event-button:hover{
+  background:var(--accent-dark);
+}
+
+.event-button:disabled{
+  background:#c9c3d0;
+  cursor:not-allowed;
+}
+
+/* =========================
+   RESERVA
+========================= */
+
+.reservation-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+}
+
+.login-box,
+.reservation-box{
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:22px;
+  background:var(--sand);
+}
+
+.login-box h3,
+.reservation-box h3{
+  font-family:'Fraunces',serif;
+  font-size:21px;
+  color:var(--deep);
+  margin:0 0 5px;
+}
+
+.login-box p,
+.reservation-box p{
+  color:#7c6f92;
+  font-size:13px;
+  margin:0 0 18px;
+}
+
+.login-status{
+  padding:10px 12px;
+  border-radius:9px;
+  font-size:13px;
+  margin-bottom:15px;
+  display:none;
+}
+
+.login-status.show{
+  display:block;
+}
+
+.login-status.ok{
+  background:#e5f3ea;
+  color:var(--ok);
+}
+
+.login-status.bad{
+  background:#fbe8e4;
+  color:var(--bad);
+}
+
+label{
+  display:block;
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--deep);
+  margin:13px 0 5px;
+}
+
+input,
+select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  font-size:14px;
+  font-family:inherit;
+  background:#fff;
+}
+
+input:focus,
+select:focus{
+  outline:2px solid var(--accent);
+  outline-offset:1px;
+}
+
+.form-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.action{
+  width:100%;
+  margin-top:17px;
+  border:none;
+  border-radius:10px;
+  padding:12px 18px;
+  background:var(--accent);
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.15s;
+}
+
+.action:hover{
+  background:var(--accent-dark);
+}
+
+.action:disabled{
+  background:#c9c3d0;
+  cursor:not-allowed;
+}
+
+.demo-login{
+  margin-top:14px;
+  padding:11px 13px;
+  border-radius:9px;
+  background:#eee8f5;
+  color:#66587b;
+  font-size:12px;
+}
+
+.demo-login strong{
+  color:var(--deep);
+}
+
+/* =========================
+   EVENTO SELECCIONADO
+========================= */
+
+.selected-event{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px;
+  margin-top:15px;
+  display:none;
+}
+
+.selected-event.show{
+  display:block;
+}
+
+.selected-event strong{
+  display:block;
+  font-family:'Fraunces',serif;
+  font-size:17px;
+  color:var(--deep);
+}
+
+.selected-event span{
+  color:#7c6f92;
+  font-size:12px;
+}
+
+/* =========================
+   MENSAJES
+========================= */
+
+.msg{
+  display:none;
+  padding:12px 14px;
+  border-radius:10px;
+  margin-top:14px;
+  font-size:13px;
+}
+
+.msg.show{
+  display:block;
+}
+
+.msg.ok{
+  background:#e5f3ea;
+  color:var(--ok);
+  border:1px solid #c1e2cd;
+}
+
+.msg.bad{
+  background:#fbe8e4;
+  color:var(--bad);
+  border:1px solid #f1c3ba;
+}
+
+/* =========================
+   CONFIRMACION
+========================= */
+
+.confirmation{
+  display:none;
+  background:linear-gradient(135deg,#f3eef8,#fff);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:25px;
+  margin-top:20px;
+}
+
+.confirmation.show{
+  display:block;
+}
+
+.confirmation-icon{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#e5f3ea;
+  color:var(--ok);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  margin-bottom:12px;
+}
+
+.confirmation h3{
+  font-family:'Fraunces',serif;
+  font-size:23px;
+  color:var(--deep);
+  margin:0 0 7px;
+}
+
+.confirmation p{
+  color:#6f637f;
+  font-size:13.5px;
+  margin:5px 0;
+}
+
+.ticket-code{
+  margin-top:15px;
+  display:inline-block;
+  padding:9px 13px;
+  background:var(--deep);
+  color:#fff;
+  border-radius:9px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+}
+
+/* =========================
+   COMO FUNCIONA
+========================= */
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.step{
+  padding:18px;
+  border-radius:15px;
+  background:var(--sand);
+  border:1px solid var(--line);
+}
+
+.step-number{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  margin-bottom:11px;
+}
+
+.step h3{
+  font-family:'Fraunces',serif;
+  color:var(--deep);
+  font-size:18px;
+  margin:0 0 5px;
+}
+
+.step p{
+  color:#7c6f92;
+  font-size:13px;
+  margin:0;
+}
+
+/* =========================
+   ANTES DE VENIR
+========================= */
+
+.before-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.before-item{
+  padding:18px;
+  border-left:4px solid var(--accent);
+  background:var(--sand);
+  border-radius:0 12px 12px 0;
+}
+
+.before-item h3{
+  font-family:'Fraunces',serif;
+  color:var(--deep);
+  font-size:17px;
+  margin:0 0 5px;
+}
+
+.before-item p{
+  color:#7c6f92;
+  font-size:12.5px;
+  margin:0;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  text-align:center;
+  font-size:12px;
+  color:#9a8fac;
+  padding:20px;
+  font-family:'IBM Plex Mono',monospace;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+  .events-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .reservation-layout{
+    grid-template-columns:1fr;
+  }
+
+  .steps,
+  .before-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:650px){
+
+  header{
+    padding:35px 24px 80px;
+  }
+
+  main{
+    padding:0 15px;
+  }
+
+  .quick-info{
+    grid-template-columns:1fr;
+  }
+
+  .events-grid{
+    grid-template-columns:1fr;
+  }
+
+  section{
+    padding:21px;
+  }
+
+  .form-row{
+    grid-template-columns:1fr;
+  }
+
+}
+
 </style>
 </head>
+
 <body>
 
-<div class="toast-wrap" id="toastWrap"></div>
+<header>
 
-<header class="app">
-  <div class="eyebrow">Laguna Experience · Módulo de eventos</div>
+  <p class="eyebrow">Laguna Experience · Experiencias</p>
+
   <h1>Eventos Especiales</h1>
-  <p class="sub">Publicación de eventos, venta de entradas asociadas a la pulsera, control de capacidad y validación de acceso.</p>
-  <div class="wave"><svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,30 C150,60 350,0 600,30 C850,60 1050,0 1200,30 L1200,60 L0,60 Z" fill="#F6F3FA"/></svg></div>
+
+  <p class="sub">
+    Viví eventos únicos dentro de Laguna Experience. 
+    Elegí tu evento, reservá tus entradas y disfrutá de la experiencia.
+  </p>
+
 </header>
 
+
 <main>
-  <div class="dash" id="dash"></div>
 
-  <section class="panel">
-    <h2>Crear evento</h2>
-    <form class="grid-form" id="eventoForm">
-      <div><label for="evNombre">Nombre</label><input type="text" id="evNombre" placeholder="Ej: Noche de fuegos artificiales" required></div>
-      <div><label for="evFecha">Fecha</label><input type="date" id="evFecha" required></div>
-      <div><label for="evHora">Horario</label><input type="time" id="evHora" required></div>
-      <div><label for="evCap">Capacidad</label><input type="number" id="evCap" min="1" value="50" required></div>
-      <div><button type="submit" class="primary">Publicar evento</button></div>
-    </form>
-    <div class="msg" id="eventoMsg"></div>
-  </section>
+  <!-- INFORMACION RAPIDA -->
 
-  <section class="panel">
-    <h2>Eventos disponibles</h2>
-    <div class="grid-cards" id="eventCards"></div>
-  </section>
+  <div class="quick-info">
 
-  <section class="panel">
-    <h2>Comprar / reservar entrada</h2>
-    <p class="desc">La entrada queda asociada a la pulsera del visitante. No se puede superar la capacidad del evento.</p>
-    <form class="grid-form" id="entradaForm">
-      <div><label for="entEvento">Evento</label><select id="entEvento" required></select></div>
-      <div><label for="entVis">Visitante</label><select id="entVis" required></select></div>
-      <div><button type="submit" class="primary">Comprar entrada</button></div>
-    </form>
-    <div class="msg" id="entradaMsg"></div>
-  </section>
-
-  <section class="panel">
-    <h2>Control de acceso</h2>
-    <p class="desc">Validá el ingreso escaneando la pulsera contra la entrada emitida.</p>
-    <form class="grid-form" id="accesoForm">
-      <div><label for="accPulsera">Código de pulsera</label><input type="text" id="accPulsera" placeholder="Ej: PUL-1001" required></div>
-      <div><label for="accEvento">Evento</label><select id="accEvento" required></select></div>
-      <div><button type="submit" class="primary">Validar acceso</button></div>
-    </form>
-    <div class="msg" id="accesoMsg"></div>
-  </section>
-
-  <section class="panel">
-    <h2>Entradas emitidas</h2>
-    <div style="overflow-x:auto;">
-    <table id="tablaEntradas">
-      <thead><tr><th>ID</th><th>Evento</th><th>Visitante</th><th>Pulsera</th><th>Estado</th><th>Consumos</th></tr></thead>
-      <tbody></tbody>
-    </table>
+    <div class="info-card">
+      <div class="info-icon">🎟️</div>
+      <h3>Reservá tu entrada</h3>
+      <p>Elegí el evento y la cantidad de personas que van a asistir.</p>
     </div>
+
+    <div class="info-card">
+      <div class="info-icon">📅</div>
+      <h3>Fechas y horarios</h3>
+      <p>Consultá cuándo se realiza cada evento antes de reservar.</p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-icon">✨</div>
+      <h3>Experiencias únicas</h3>
+      <p>Eventos especiales pensados para disfrutar Laguna de otra manera.</p>
+    </div>
+
+  </div>
+
+
+  <!-- EVENTOS -->
+
+  <section>
+
+    <h2 class="section-title">Próximos eventos</h2>
+
+    <p class="section-description">
+      Explorá las próximas propuestas y elegí la experiencia que querés vivir.
+    </p>
+
+    <div class="events-grid" id="eventCards"></div>
+
   </section>
 
-  <section class="panel">
-    <h2>Registrar consumo durante el evento</h2>
-    <form class="grid-form" id="consumoForm">
-      <div><label for="consEntrada">Entrada</label><select id="consEntrada" required></select></div>
-      <div><label for="consDesc">Consumo</label><input type="text" id="consDesc" placeholder="Ej: gaseosa, snack" required></div>
-      <div><label for="consMonto">Monto</label><input type="number" id="consMonto" min="1" value="1500" required></div>
-      <div><button type="submit" class="primary">Registrar consumo</button></div>
-    </form>
+
+  <!-- RESERVA -->
+
+  <section id="reservar">
+
+    <h2 class="section-title">Reservá tu entrada</h2>
+
+    <p class="section-description">
+      Para realizar una reserva primero tenés que iniciar sesión.
+    </p>
+
+
+    <div class="reservation-layout">
+
+      <!-- LOGIN -->
+
+      <div class="login-box">
+
+        <h3>Ingresar</h3>
+
+        <p>
+          Iniciá sesión para continuar con tu reserva.
+        </p>
+
+        <div class="login-status" id="loginStatus"></div>
+
+        <label for="usuario">Usuario</label>
+        <input
+          type="text"
+          id="usuario"
+          placeholder="Ingresá tu usuario"
+        >
+
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Ingresá tu contraseña"
+        >
+
+        <button class="action" onclick="iniciarSesion()">
+          Iniciar sesión
+        </button>
+
+        <div class="demo-login">
+          <strong>Demo:</strong><br>
+          Usuario: cliente<br>
+          Contraseña: 12345
+        </div>
+
+      </div>
+
+
+      <!-- RESERVACION -->
+
+      <div class="reservation-box">
+
+        <h3>Datos de la reserva</h3>
+
+        <p>
+          Seleccioná el evento y la cantidad de entradas.
+        </p>
+
+        <label for="eventoReserva">
+          Evento
+        </label>
+
+        <select id="eventoReserva" onchange="mostrarEventoSeleccionado()">
+        </select>
+
+
+        <div class="selected-event" id="selectedEvent">
+
+          <strong id="selectedName"></strong>
+
+          <span id="selectedInfo"></span>
+
+        </div>
+
+
+        <div class="form-row">
+
+          <div>
+
+            <label for="cantidad">
+              Cantidad de personas
+            </label>
+
+            <input
+              type="number"
+              id="cantidad"
+              min="1"
+              max="10"
+              value="1"
+            >
+
+          </div>
+
+          <div>
+
+            <label for="nombre">
+              Nombre del titular
+            </label>
+
+            <input
+              type="text"
+              id="nombre"
+              placeholder="Nombre y apellido"
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="action"
+          id="btnReservar"
+          onclick="reservarEntrada()"
+        >
+          Reservar entrada
+        </button>
+
+
+        <div class="msg" id="reservationMsg"></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- CONFIRMACION -->
+
+    <div class="confirmation" id="confirmation">
+
+      <div class="confirmation-icon">
+        ✓
+      </div>
+
+      <h3>¡Reserva realizada!</h3>
+
+      <p id="confirmationText"></p>
+
+      <p>
+        Guardá el código de reserva para presentarlo al ingresar al evento.
+      </p>
+
+      <div class="ticket-code" id="ticketCode"></div>
+
+    </div>
+
   </section>
+
+
+  <!-- COMO FUNCIONA -->
+
+  <section>
+
+    <h2 class="section-title">¿Cómo funciona?</h2>
+
+    <p class="section-description">
+      Reservar una entrada para un evento es simple.
+    </p>
+
+    <div class="steps">
+
+      <div class="step">
+
+        <div class="step-number">1</div>
+
+        <h3>Elegí el evento</h3>
+
+        <p>
+          Consultá las fechas, horarios y disponibilidad de los próximos eventos.
+        </p>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">2</div>
+
+        <h3>Reservá</h3>
+
+        <p>
+          Iniciá sesión, indicá cuántas personas van a asistir y confirmá la reserva.
+        </p>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">3</div>
+
+        <h3>Disfrutá</h3>
+
+        <p>
+          El día del evento presentá tu reserva y disfrutá la experiencia.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ANTES DE VENIR -->
+
+  <section>
+
+    <h2 class="section-title">Antes de venir</h2>
+
+    <p class="section-description">
+      Algunas recomendaciones para disfrutar mejor el evento.
+    </p>
+
+    <div class="before-grid">
+
+      <div class="before-item">
+
+        <h3>📱 Tené tu reserva</h3>
+
+        <p>
+          Guardá el código de reserva en tu teléfono para poder consultarlo cuando llegues.
+        </p>
+
+      </div>
+
+
+      <div class="before-item">
+
+        <h3>⏰ Llegá con tiempo</h3>
+
+        <p>
+          Revisá el horario del evento y procurá llegar con anticipación.
+        </p>
+
+      </div>
+
+
+      <div class="before-item">
+
+        <h3>🎉 Disfrutá la experiencia</h3>
+
+        <p>
+          Una vez dentro, podés disfrutar de las actividades y propuestas disponibles durante el evento.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
 </main>
 
-<footer>Laguna Experience — Eventos Especiales — datos de demostración</footer>
+
+<footer>
+  Laguna Experience — Eventos Especiales
+</footer>
+
 
 <script>
-// ---------- DATOS DE EJEMPLO ----------
+
+/* =========================
+   DATOS DE EVENTOS
+========================= */
+
 let eventos = [
-  {id:'EV1', nombre:'Noche de fuegos artificiales', fecha:'2026-09-05', hora:'21:00', capacidad:80, vendidas:0},
-  {id:'EV2', nombre:'Festival gastronómico', fecha:'2026-09-12', hora:'18:00', capacidad:150, vendidas:0},
-  {id:'EV3', nombre:'DJ set en la laguna', fecha:'2026-09-19', hora:'20:00', capacidad:5, vendidas:5}, // ya lleno, para probar bloqueo
+
+  {
+    id:"EV1",
+    nombre:"DJ Set en la Laguna",
+    fecha:"2026-09-19",
+    hora:"20:00",
+    capacidad:120,
+    reservadas:32
+  },
+
+  {
+    id:"EV2",
+    nombre:"Noche de Fuegos Artificiales",
+    fecha:"2026-09-26",
+    hora:"21:00",
+    capacidad:100,
+    reservadas:18
+  },
+
+  {
+    id:"EV3",
+    nombre:"Festival Gastronómico",
+    fecha:"2026-10-03",
+    hora:"18:00",
+    capacidad:150,
+    reservadas:47
+  }
+
 ];
-let eventoCounter = 3;
 
-let visitantes = [
-  {id:'V1', nombre:'Ana Gómez', pulsera:'PUL-1001'},
-  {id:'V2', nombre:'Luis Fernández', pulsera:'PUL-1002'},
-  {id:'V3', nombre:'Carla Núñez', pulsera:'PUL-1003'},
-];
 
-let entradas = [];
-let entradaCounter = 0;
+/* =========================
+   UTILIDADES
+========================= */
 
-// ---------- UTILIDADES ----------
-function showToast(text, type){
-  const wrap = document.getElementById('toastWrap');
-  const t = document.createElement('div'); t.className='toast '+type; t.textContent=text;
-  wrap.appendChild(t); setTimeout(()=>t.remove(),3200);
-}
-function showMsg(id,text,ok){
-  const el = document.getElementById(id);
-  el.textContent = text; el.className = 'msg show ' + (ok?'ok':'bad');
+function formatearFecha(fecha){
+
+  const partes = fecha.split("-");
+
+  return `${partes[2]}/${partes[1]}/${partes[0]}`;
+
 }
 
-// ---------- RENDER ----------
-function renderDash(){
-  const totalVendidas = eventos.reduce((s,e)=>s+e.vendidas,0);
-  const consumoTotal = entradas.reduce((s,e)=>s+e.consumos.reduce((a,c)=>a+c.monto,0),0);
-  document.getElementById('dash').innerHTML = `
-    <div class="stat"><div class="label">Eventos publicados</div><div class="value">${eventos.length}</div></div>
-    <div class="stat"><div class="label">Entradas vendidas</div><div class="value">${totalVendidas}</div></div>
-    <div class="stat"><div class="label">Accesos validados</div><div class="value">${entradas.filter(e=>e.estado==='usada').length}</div></div>
-    <div class="stat"><div class="label">Consumo en eventos</div><div class="value">$${consumoTotal.toLocaleString('es-AR')}</div></div>
-  `;
-}
 
-function renderEventCards(){
-  const wrap = document.getElementById('eventCards');
-  wrap.innerHTML = eventos.map(e=>{
-    const lleno = e.vendidas >= e.capacidad;
-    return `<div class="card">
-      <h3>${e.nombre} ${lleno?'<span class="badge bad">Completo</span>':''}</h3>
-      <div class="meta">${e.fecha} · ${e.hora}<br>Capacidad: ${e.vendidas}/${e.capacidad}</div>
-    </div>`;
-  }).join('');
-}
+function mostrarFechaCompleta(fecha){
 
-function fillSelects(){
-  const entEvento = document.getElementById('entEvento');
-  entEvento.innerHTML = eventos.map(e=>`<option value="${e.id}">${e.nombre} (${e.vendidas}/${e.capacidad})</option>`).join('');
-  const entVis = document.getElementById('entVis');
-  entVis.innerHTML = visitantes.map(v=>`<option value="${v.id}">${v.nombre} — ${v.pulsera}</option>`).join('');
-  const accEvento = document.getElementById('accEvento');
-  accEvento.innerHTML = eventos.map(e=>`<option value="${e.id}">${e.nombre}</option>`).join('');
-  const consEntrada = document.getElementById('consEntrada');
-  consEntrada.innerHTML = entradas.filter(e=>e.estado!=='cancelada').map(e=>`<option value="${e.id}">${e.id} — ${e.visNombre} (${e.evNombre})</option>`).join('') || '<option value="">— no hay entradas —</option>';
-}
+  const fechaObj = new Date(fecha + "T00:00:00");
 
-function renderEntradas(){
-  const tbody = document.querySelector('#tablaEntradas tbody');
-  tbody.innerHTML = entradas.slice().reverse().map(e=>`
-    <tr>
-      <td>${e.id}</td><td>${e.evNombre}</td><td>${e.visNombre}</td><td>${e.pulsera}</td>
-      <td><span class="badge ${e.estado==='usada'?'ok':e.estado==='valida'?'warn':'bad'}">${e.estado}</span></td>
-      <td>${e.consumos.length ? e.consumos.map(c=>`${c.desc} ($${c.monto})`).join(', ') : '—'}</td>
-    </tr>
-  `).join('') || '<tr><td colspan="6" style="color:#9a8fac;">Sin entradas emitidas.</td></tr>';
-}
-
-function renderAll(){ renderDash(); renderEventCards(); fillSelects(); renderEntradas(); }
-
-// ---------- CREAR EVENTO ----------
-document.getElementById('eventoForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const nombre = document.getElementById('evNombre').value.trim();
-  const fecha = document.getElementById('evFecha').value;
-  const hora = document.getElementById('evHora').value;
-  const capacidad = parseInt(document.getElementById('evCap').value,10);
-
-  // REGLA: todo evento debe tener fecha y horario, y capacidad máxima
-  if(!fecha || !hora){
-    showMsg('eventoMsg', 'No se puede publicar el evento sin fecha y horario definidos.', false);
-    return;
-  }
-  if(!capacidad || capacidad < 1){
-    showMsg('eventoMsg', 'La capacidad debe ser mayor a cero.', false);
-    return;
-  }
-  eventoCounter++;
-  eventos.push({id:'EV'+eventoCounter, nombre, fecha, hora, capacidad, vendidas:0});
-  showMsg('eventoMsg', `Evento "${nombre}" publicado para el ${fecha} a las ${hora}.`, true);
-  showToast('Evento publicado', 'ok');
-  document.getElementById('eventoForm').reset();
-  renderAll();
-});
-
-// ---------- COMPRAR ENTRADA ----------
-document.getElementById('entradaForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const evId = document.getElementById('entEvento').value;
-  const visId = document.getElementById('entVis').value;
-  const ev = eventos.find(x=>x.id===evId);
-  const vis = visitantes.find(x=>x.id===visId);
-
-  // REGLA: no superar capacidad del evento
-  if(ev.vendidas >= ev.capacidad){
-    showMsg('entradaMsg', `No se puede vender más entradas: "${ev.nombre}" alcanzó su capacidad máxima (${ev.capacidad}).`, false);
-    showToast('Evento completo', 'bad');
-    return;
-  }
-
-  ev.vendidas += 1;
-  entradaCounter++;
-  entradas.push({
-    id:'ENT-'+String(entradaCounter).padStart(4,'0'),
-    evId, evNombre: ev.nombre, visId, visNombre: vis.nombre, pulsera: vis.pulsera,
-    estado:'valida', consumos:[]
+  return fechaObj.toLocaleDateString("es-AR", {
+    weekday:"long",
+    day:"numeric",
+    month:"long"
   });
-  showMsg('entradaMsg', `Entrada emitida para ${vis.nombre}, asociada a la pulsera ${vis.pulsera}.`, true);
-  showToast('Entrada emitida', 'ok');
-  renderAll();
-});
 
-// ---------- VALIDAR ACCESO ----------
-document.getElementById('accesoForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const pulsera = document.getElementById('accPulsera').value.trim();
-  const evId = document.getElementById('accEvento').value;
-  const ev = eventos.find(x=>x.id===evId);
+}
 
-  const entrada = entradas.find(en => en.pulsera.toLowerCase()===pulsera.toLowerCase() && en.evId===evId);
 
-  // REGLA: pulsera sin entrada válida → denegar acceso
-  if(!entrada){
-    showMsg('accesoMsg', `Acceso denegado: la pulsera ${pulsera} no tiene una entrada válida para "${ev.nombre}".`, false);
-    showToast('Acceso denegado', 'bad');
+function obtenerDisponibles(evento){
+
+  return evento.capacidad - evento.reservadas;
+
+}
+
+
+/* =========================
+   RENDER EVENTOS
+========================= */
+
+function renderEventos(){
+
+  const container = document.getElementById("eventCards");
+
+  container.innerHTML = "";
+
+  eventos.forEach(evento => {
+
+    const disponibles = obtenerDisponibles(evento);
+
+    const completo = disponibles <= 0;
+
+    const card = document.createElement("div");
+
+    card.className = "event-card";
+
+    card.innerHTML = `
+
+      <div class="event-top">
+
+        <span class="event-date">
+          ${formatearFecha(evento.fecha)}
+        </span>
+
+        <h3>
+          ${evento.nombre}
+        </h3>
+
+      </div>
+
+      <div class="event-body">
+
+        <div class="event-meta">
+
+          <span>
+            📅 ${mostrarFechaCompleta(evento.fecha)}
+          </span>
+
+          <span>
+            🕐 ${evento.hora} hs
+          </span>
+
+        </div>
+
+        <div class="capacity">
+
+          ${
+            completo
+            ? `<span class="badge full">Completo</span>`
+            : `<span class="badge available">${disponibles} lugares disponibles</span>`
+          }
+
+        </div>
+
+        <button
+          class="event-button"
+          ${completo ? "disabled" : ""}
+          onclick="seleccionarEvento('${evento.id}')"
+        >
+
+          ${
+            completo
+            ? "Sin disponibilidad"
+            : "Reservar entrada"
+          }
+
+        </button>
+
+      </div>
+
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   SELECT DE EVENTOS
+========================= */
+
+function cargarEventosSelect(){
+
+  const select = document.getElementById("eventoReserva");
+
+  const disponibles = eventos.filter(
+    evento => obtenerDisponibles(evento) > 0
+  );
+
+  if(disponibles.length === 0){
+
+    select.innerHTML = `
+      <option value="">
+        No hay eventos disponibles
+      </option>
+    `;
+
+    document.getElementById("btnReservar").disabled = true;
+
     return;
+
   }
-  if(entrada.estado === 'usada'){
-    showMsg('accesoMsg', `Acceso denegado: la entrada ${entrada.id} ya fue utilizada.`, false);
-    showToast('Entrada ya utilizada', 'bad');
+
+  select.innerHTML = disponibles.map(evento => `
+
+    <option value="${evento.id}">
+
+      ${evento.nombre}
+
+    </option>
+
+  `).join("");
+
+  mostrarEventoSeleccionado();
+
+}
+
+
+/* =========================
+   SELECCIONAR EVENTO
+========================= */
+
+function seleccionarEvento(id){
+
+  document.getElementById("eventoReserva").value = id;
+
+  mostrarEventoSeleccionado();
+
+  document.getElementById("reservar").scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================
+   MOSTRAR EVENTO
+========================= */
+
+function mostrarEventoSeleccionado(){
+
+  const id = document.getElementById("eventoReserva").value;
+
+  const evento = eventos.find(
+    e => e.id === id
+  );
+
+  const box = document.getElementById("selectedEvent");
+
+  if(!evento){
+
+    box.classList.remove("show");
+
     return;
+
   }
 
-  entrada.estado = 'usada';
-  showMsg('accesoMsg', `Acceso concedido a ${entrada.visNombre} mediante la pulsera ${pulsera}. Ingreso registrado.`, true);
-  showToast('Acceso concedido', 'ok');
-  renderAll();
-});
+  const disponibles = obtenerDisponibles(evento);
 
-// ---------- CONSUMOS ----------
-document.getElementById('consumoForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const entId = document.getElementById('consEntrada').value;
-  const desc = document.getElementById('consDesc').value.trim();
-  const monto = parseInt(document.getElementById('consMonto').value,10);
-  if(!entId){ showToast('No hay entradas para registrar consumo', 'bad'); return; }
-  const entrada = entradas.find(x=>x.id===entId);
-  entrada.consumos.push({desc, monto});
-  showToast(`Consumo registrado para ${entrada.visNombre}`, 'ok');
-  document.getElementById('consumoForm').reset();
-  document.getElementById('consMonto').value = 1500;
-  renderAll();
-});
+  document.getElementById("selectedName").textContent =
+    evento.nombre;
 
-// ---------- INIT ----------
-renderAll();
+  document.getElementById("selectedInfo").textContent =
+    `${mostrarFechaCompleta(evento.fecha)} · ${evento.hora} hs · ${disponibles} lugares disponibles`;
+
+  box.classList.add("show");
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function iniciarSesion(){
+
+  const usuario =
+    document.getElementById("usuario").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const status =
+    document.getElementById("loginStatus");
+
+
+  if(
+    usuario === "cliente" &&
+    password === "12345"
+  ){
+
+    localStorage.setItem(
+      "lagunaUsuario",
+      "cliente"
+    );
+
+    status.className = "login-status show ok";
+
+    status.textContent =
+      "✓ Sesión iniciada correctamente.";
+
+    actualizarEstadoLogin();
+
+    return;
+
+  }
+
+
+  status.className = "login-status show bad";
+
+  status.textContent =
+    "Usuario o contraseña incorrectos.";
+
+}
+
+
+/* =========================
+   ESTADO LOGIN
+========================= */
+
+function actualizarEstadoLogin(){
+
+  const usuario =
+    localStorage.getItem("lagunaUsuario");
+
+  const status =
+    document.getElementById("loginStatus");
+
+  if(usuario === "cliente"){
+
+    status.className = "login-status show ok";
+
+    status.textContent =
+      "✓ Estás conectado como cliente.";
+
+    document.getElementById("usuario").value =
+      "cliente";
+
+    document.getElementById("password").value =
+      "12345";
+
+  }
+
+}
+
+
+/* =========================
+   RESERVAR
+========================= */
+
+function reservarEntrada(){
+
+  const msg =
+    document.getElementById("reservationMsg");
+
+  msg.className = "msg";
+
+  const usuario =
+    localStorage.getItem("lagunaUsuario");
+
+  if(usuario !== "cliente"){
+
+    msg.className = "msg show bad";
+
+    msg.textContent =
+      "Primero tenés que iniciar sesión para reservar.";
+
+    return;
+
+  }
+
+
+  const eventoId =
+    document.getElementById("eventoReserva").value;
+
+  const cantidad =
+    Number(document.getElementById("cantidad").value);
+
+  const nombre =
+    document.getElementById("nombre").value.trim();
+
+
+  const evento =
+    eventos.find(e => e.id === eventoId);
+
+
+  if(!evento){
+
+    msg.className = "msg show bad";
+
+    msg.textContent =
+      "Seleccioná un evento.";
+
+    return;
+
+  }
+
+
+  if(!nombre){
+
+    msg.className = "msg show bad";
+
+    msg.textContent =
+      "Ingresá el nombre del titular de la reserva.";
+
+    return;
+
+  }
+
+
+  if(!cantidad || cantidad < 1){
+
+    msg.className = "msg show bad";
+
+    msg.textContent =
+      "La cantidad de personas debe ser mayor a cero.";
+
+    return;
+
+  }
+
+
+  const disponibles =
+    obtenerDisponibles(evento);
+
+
+  if(cantidad > disponibles){
+
+    msg.className = "msg show bad";
+
+    msg.textContent =
+      `No hay suficientes lugares. Actualmente quedan ${disponibles} disponibles.`;
+
+    return;
+
+  }
+
+
+  /* Actualizamos disponibilidad */
+
+  evento.reservadas += cantidad;
+
+
+  /* Generamos código */
+
+  const numero =
+    Math.floor(1000 + Math.random() * 9000);
+
+  const codigo =
+    "EVT-" + numero;
+
+
+  /* Mostramos mensaje */
+
+  msg.className = "msg show ok";
+
+  msg.textContent =
+    "Reserva realizada correctamente.";
+
+
+  document.getElementById("confirmationText").textContent =
+    `${nombre}, reservaste ${cantidad} entrada${cantidad > 1 ? "s" : ""} para "${evento.nombre}", el ${mostrarFechaCompleta(evento.fecha)} a las ${evento.hora} hs.`;
+
+
+  document.getElementById("ticketCode").textContent =
+    codigo;
+
+
+  document
+    .getElementById("confirmation")
+    .classList.add("show");
+
+
+  /* Actualizamos página */
+
+  renderEventos();
+
+  cargarEventosSelect();
+
+  document.getElementById("cantidad").value = 1;
+
+
+  document
+    .getElementById("confirmation")
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+
+}
+
+
+/* =========================
+   INICIO
+========================= */
+
+renderEventos();
+
+cargarEventosSelect();
+
+actualizarEstadoLogin();
+
 </script>
+
 </body>
 </html>
